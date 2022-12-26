@@ -1,0 +1,124 @@
+/* We use link pseudo class here
+ */
+
+.btn {
+  &,
+  &:link,
+  &:visited {
+    /* To make the anchor link have the same style before and after it's clicked */
+    text-transform: uppercase;
+    /* Transform text to uppercase */
+    text-decoration: none;
+    /* Eliminate the default underline */
+    padding: 1.5rem 4rem;
+    /* Put some space between the text and the border of the box element */
+    display: inline-block;
+    /* In order for the padding to work we specify display:inline-block */
+    border-radius: 10rem;
+    transition: all 0.2s;
+    /* Adds smoothieness as click proceeds in 0.2s instead of instantly */
+    position: relative;
+    font-size: $default-font-size;
+
+    //--Changes for <button> element
+    border: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+
+    /* Making buttons scale to approx. 1.5x then disappear(opacity:0) in transition time 0.4 */
+    &::after {
+      /* Means, when we hover the button, we want to add some styles on the after pseudo element */
+      transform: scaleX(1.4) scaleY(1.6);
+      /* scale increases the element(2 is double..etc) */
+      opacity: 0;
+      /* Makes the button disappear after the transition:0.4s duration set in the initial state btn::after */
+    }
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    transform: translateY(-0.1rem);
+    /* translate(-1px)'s reference here is the original link state(0) not the hover state(-3) */
+    box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+  }
+
+  /* Specifying properties of the ::after (child of .btn) */
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    /* ::after pseudo element is treated like a child of the element
+    so, the reference for height and the width is the button(.btn) itself */
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* top:0, left:0 makes the child element fixed to the exact coords of the  */
+    /* To make this related to the button(.btn), we set .btn possition to 'relative' */
+    z-index: -1;
+    /* z-index defines the position of the elements if they're on top of each other
+    z-index:-1 makes the .btn clone behind the original one */
+    transition: 0.4s;
+  }
+
+  &--white {
+    background-color: $color-white;
+    /* Color of the background */
+    color: $color-grey-dark;
+    /* Color of the text itself */
+
+    &::after {
+      background-color: $color-white;
+      /* We need this effect to work only on the header button */
+    }
+  }
+
+  &--green {
+    background-color: $color-primary;
+    /* Color of the background */
+    color: $color-white;
+    /* Color of the text itself */
+
+    &::after {
+      background-color: $color-primary;
+      /* We need this effect to work only on the header button */
+    }
+  }
+
+  &--animated {
+    animation: moveInFromBottom 0.5s ease-out 0.75;
+    animation-fill-mode: backwards;
+    /* Useless now, on video it glitched, right now CSS seems to have fixed the problem without the need to use animation-fill-mode */
+    /* This automatically applies the styles of 0% before the animation starts(styles apply immediately on load)
+      So it won't wait 0.75s to load 0% styles.*/
+  }
+}
+
+.btn-text {
+  &:link,
+  &:visited {
+    font-size: $default-font-size;
+    color: $color-primary;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary;
+    padding: 3px;
+  }
+  &:hover {
+    background-color: $color-primary;
+    color: $color-white;
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.15); //Setting black shadow on hover
+    transform: translateY(-2px); //Button goes up
+  }
+
+  &:active {
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15); //Less shadow on click
+    transform: translateY(0); //Button goes down on click
+  }
+}

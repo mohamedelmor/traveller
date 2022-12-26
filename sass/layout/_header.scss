@@ -1,0 +1,54 @@
+.header {
+  height: 95vh;
+  /* Means at each point, height of the box of this element should be 95% of the viewport height */
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/hero.jpg);
+  background-size: cover;
+  /* 'cover' tries to fit the element inside the box no matter the width of the viewport */
+
+  background-position: top;
+  /* This makes the top of the background fixed when the viewport changes, it's the bottom that adapts to the change of img size*/
+
+  position: relative;
+  /* Set parent to relative to be reference for children's absolute positioning */
+
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  /* Set edge to vh to change and be addaptable to viewport size changes */
+  /* clip-path: polygon(50% 0, 100% 100%, 50% 100%, 0 100%); */
+  /* Triangle Challenge */
+
+  @include respond(phone) {
+    // Making the header's line cut up til 90% of the section rather than 75% so it looks less steep
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  &__logo-box {
+    // &__logo-box = .header__logo-box, it's not really iniside of it but it carries the name so we can do this trick to list all header elements, just for organization purposes (according to BEM writing method)
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &__logo {
+    height: 3.5rem;
+    /* Width will already be figured out by the browser, we just need to specify height, it also works the other way around but it's preferred to control the height*/
+  }
+
+  &__text-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    /* By setting top and left in percentages, text-box becomes dynamic in all viewports */
+    transform: translate(-50%, -50%);
+    /* Translate works in relation to the element itself not to its parent (unlike position: absolute) */
+    /* We used this to shift the element -50% in x and y, so it becomes exactly centered */
+    text-align: center;
+    /* To center the button */
+  }
+}

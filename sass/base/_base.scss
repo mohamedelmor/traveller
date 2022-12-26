@@ -1,0 +1,57 @@
+/*Resets:  To defy browsers defaults */
+/* Including all 'before' and 'after' pseudo elements in the preset */
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  /* Makes every element in the CSS file inherit box-sizing from parent(which is 'body')
+  Though box-sizing isn't inheritable, we can force inherit it using 'inherit' keyword */
+}
+
+html {
+  /* Setting root font-size */
+  //   this defines what 1rem is
+  font-size: 62.5%;
+  /* now root font-size is equal to 10px(100% is 16px)if user didnt change anything
+and if they change browser's root font-size(due to a disability in viewing the page for example), the page will change accordingly */
+
+  //*****Note for above styles:
+  //Setting root font-size(rem) above in percentage 62.5% and using it in all our components in the website is a huge advantage as all of the components will re-scale by re defining different root font-sizes(rem's) for different breakpoints
+
+  //--------------- @media mixins:
+  //In here, we're re setting 1rem for different pixels
+  //Above we had it as 1rem=62.5% of 16rem which is 10px
+  //Now it will be different:
+
+  //We want 1rem = 9px for landscape tablets (9/16)=56.25%
+  @include respond(tab-land) {
+    font-size: 56.25%;
+  }
+
+  // Now we're re defining 1 rem for tablet portrait
+  // We want it to be = 8px, so, 1rem = 8/16 = 50%
+  @include respond(tab-port) {
+    font-size: 50%;
+  }
+
+  // We want 1rem = 12px for big desktops (12/16) = 75%(makes sense as it's higher than 62.5% we set as a default for normal desktops to make it equal 10rems for easy transformation)
+  @include respond(big-desktop) {
+    font-size: 75%;
+  }
+}
+
+/* To set default fonts we usually do it in body not using universal selector * because properties related to font are usually inherited  */
+body {
+  box-sizing: border-box;
+  /* Changes box model so that borders and paddings are no longer added to total width or height that's specified for the box */
+
+  padding: 3rem;
+  //Adds white borders to the whole website
+
+  @include respond(tab-port) {
+    padding: 0;
+  }
+}
